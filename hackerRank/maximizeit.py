@@ -1,7 +1,7 @@
 from itertools import product
 
 def maximize_it():
-    K, M = map(int, '3 100'.split()) #input().split()
+    K, M = map(int, input().split()) #input().split()
     listas_i = []
     for _ in range(K):
         n, lista_i = input().split(' ', 1)
@@ -10,7 +10,6 @@ def maximize_it():
         #print(lista_i)
         listas_i.append(lista_i)
     produto = list( product(*listas_i))
-    print(produto)
     produto2 = []
     for i in produto:
         funcaosoma = 0
