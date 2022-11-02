@@ -1,5 +1,5 @@
 import unittest
-from scripts_gustavo.omie_api.transformations import change_status
+from omie_api.transformations import change_status
 import pandas as pd
 
 data = [
