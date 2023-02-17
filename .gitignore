@@ -112,8 +112,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-virtual_coins/virtual_coins_venv/
-virtual_coins/terraform/.terraform/
+*venv*
+**/.terraform/
 
 # Spyder project settings
 .spyderproject
