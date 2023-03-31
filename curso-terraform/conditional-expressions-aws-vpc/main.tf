@@ -11,7 +11,7 @@ terraform {
 
   backend "s3" {
     bucket = "gsantosaero-terraform-remote-state"
-    key    = "aws-vpc-dynamic-block/terraform.tfstate"
+    key    = "aws-vpc-conditional-expressions/terraform.tfstate"
     region = "us-east-1"
   }
 }
