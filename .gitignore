@@ -139,3 +139,5 @@ dmypy.json
 *.zip*
 test_runner.py
 poetry.lock
+
+*credentials*
