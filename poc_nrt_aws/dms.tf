@@ -26,23 +26,24 @@ resource "aws_dms_replication_instance" "dms_repl_instance" {
 }
 
 resource "aws_dms_endpoint" "source_endpoint" {
-  database_name               = local.rds_dbname
-  endpoint_id                 = "endpoint-rds"
-  endpoint_type               = "source"
-  engine_name                 = "aurora-postgresql"
-  username = local.rds_username
-  password                    = local.rds_password
-  server_name                 = aws_db_instance.db_instance_poc_nrt.address
- 
+  database_name = local.rds_dbname
+  endpoint_id   = "endpoint-rds"
+  endpoint_type = "source"
+  engine_name   = aws_db_instance.db_instance_poc_nrt.engine
+  username      = local.rds_username
+  password      = local.rds_password
+  server_name   = aws_db_instance.db_instance_poc_nrt.address
+  port = aws_db_instance.db_instance_poc_nrt.port
+
 }
 
 resource "aws_dms_endpoint" "target_endpoint" {
-  endpoint_id                 = "endpoint-kinesis"
-  endpoint_type               = "target"
-  engine_name                 = "kinesis"
-  kinesis_settings = {
+  endpoint_id   = "endpoint-kinesis"
+  endpoint_type = "target"
+  engine_name   = "kinesis"
+  kinesis_settings {
     service_access_role_arn = aws_iam_role.poc_nrt_role.arn
-    stream_arn = aws_kinesis_stream.pocnrt_stream.arn
+    stream_arn              = aws_kinesis_stream.pocnrt_stream.arn
   }
 
 }
@@ -51,10 +52,9 @@ resource "aws_dms_replication_task" "dms_repl_task" {
   migration_type           = "cdc"
   replication_instance_arn = aws_dms_replication_instance.dms_repl_instance.replication_instance_arn
   replication_task_id      = "pocnrt-dms-repl-task"
-  source_endpoint_arn      = aws_db_instance.db_instance_poc_nrt.arn
+  source_endpoint_arn      = aws_dms_endpoint.source_endpoint.endpoint_arn
   table_mappings           = "{\"rules\":[{\"rule-type\":\"selection\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"object-locator\":{\"schema-name\":\"%\",\"table-name\":\"%\"},\"rule-action\":\"include\"}]}"
-
-  target_endpoint_arn = aws_kinesis_stream.pocnrt_stream.arn
+  target_endpoint_arn      = aws_dms_endpoint.target_endpoint.endpoint_arn
 
   depends_on = [
     aws_kinesis_stream.pocnrt_stream
