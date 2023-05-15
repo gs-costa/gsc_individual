@@ -22,7 +22,10 @@ resource "aws_dms_replication_instance" "dms_repl_instance" {
   replication_subnet_group_id  = aws_dms_replication_subnet_group.dms_subnet_group.id
   vpc_security_group_ids       = [aws_security_group.sc_poc_nrt.id]
 
-  depends_on = [aws_iam_role_policy_attachment.poc_nrt_policy]
+  depends_on = [
+    aws_iam_role_policy_attachment.poc_nrt_policy,
+    aws_db_instance.db_instance_poc_nrt
+  ]
 }
 
 resource "aws_dms_endpoint" "source_endpoint" {
@@ -33,7 +36,7 @@ resource "aws_dms_endpoint" "source_endpoint" {
   username      = local.rds_username
   password      = local.rds_password
   server_name   = aws_db_instance.db_instance_poc_nrt.address
-  port = aws_db_instance.db_instance_poc_nrt.port
+  port          = aws_db_instance.db_instance_poc_nrt.port
 
 }
 
