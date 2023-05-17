@@ -1,9 +1,9 @@
 resource "aws_vpc" "vpc_poc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
 
   tags = {
-    Name = "vpc_nrt_poc"
+    Name = "vpc_poc"
   }
 }
 
@@ -29,19 +29,19 @@ resource "aws_security_group" "sc_poc_nrt" {
   }
 
   ingress {
-    description      = "internet"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "all"
-    # cidr_blocks      = ["0.0.0.0/0"]
+    description = "internet"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "all"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    description      = "internet"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "all"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "internet"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "all"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -53,7 +53,21 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-# resource "aws_internet_gateway_attachment" "iga" {
-#   internet_gateway_id = aws_internet_gateway.igw.id
-#   vpc_id              = aws_vpc.vpc_poc.id
-# }
+resource "aws_route_table" "rt_poc" {
+  vpc_id = aws_vpc.vpc_poc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    name = "rt_poc"
+  }
+}
+
+resource "aws_route_table_association" "a" {
+  count = 2
+  subnet_id      = aws_subnet.subnet[count.index].id
+  route_table_id = aws_route_table.rt_poc.id
+}

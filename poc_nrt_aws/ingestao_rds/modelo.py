@@ -181,6 +181,7 @@ class DatabaseAurora(DatabaseInterface):
         print(data)
         cursor = self.client.connect()
         cursor.execute(self.query, data)
+        cursor.commit()
         cursor.close()
         return {"statusCode": 200, "data": True}
 
@@ -302,7 +303,7 @@ def main():
 
     try:
         query = """
-            CREATE TABLE sales (
+            CREATE TABLE public.sales (
                 InvoiceID int NOT NULL ,
                 ItemID int NOT NULL,
                 Category varchar(255),
@@ -315,7 +316,8 @@ def main():
                 PRIMARY KEY (InvoiceID)
             )
         """
-        helper.execute_non_query(query=query,)
+        query = db.text(query)
+        # print(helper.execute_non_query(query=query,))
         time.sleep(2)
     except Exception as e:
         print("Error",e)
@@ -324,12 +326,13 @@ def main():
         query = """
             ALTER TABLE execute_non_query.sales REPLICA IDENTITY  FULL
         """
+        query = db.text(query)
         helper.execute(query=query)
         time.sleep(2)
     except Exception as e:
         pass
 
-    for i in range(0, 100):
+    for i in range(0, 5):
 
         item_id = random.randint(1, 100)
         state = states[random.randint(0, len(states) - 1)]
@@ -341,14 +344,24 @@ def main():
         order_date = datetime.date(2016, random.randint(1, 12), random.randint(1, 28)).isoformat()
         invoiceid = random.randint(1, 20000)
 
-        data_order = (invoiceid, item_id, product_category, price, quantity, order_date, state, shipping_type, referral)
+        # data_order = (invoiceid, item_id, product_category, price, quantity, order_date, state, shipping_type, referral)
+        data_order = {}
+        data_order["invoiceid"] = invoiceid
+        data_order["itemid"] = item_id
+        data_order["category"] = product_category
+        data_order["price"] = price
+        data_order["quantity"] = quantity
+        data_order["orderdate"] = order_date
+        data_order["destinationstate"] = state
+        data_order["shippingtype"] = shipping_type
+        data_order["referral"] = referral
 
         query = """INSERT INTO public.sales
                                             (
                                             invoiceid, itemid, category, price, quantity, orderdate, destinationstate,shippingtype, referral
                                             )
-                                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-
+                                        VALUES (:invoiceid, :itemid, :category, :price, :quantity, :orderdate, :destinationstate,:shippingtype, :referral)"""
+        query = db.text(query)
         helper.insert_many(query=query, data=data_order)
 
 
