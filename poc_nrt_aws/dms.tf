@@ -5,7 +5,7 @@ resource "aws_dms_replication_subnet_group" "dms_subnet_group" {
   subnet_ids = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id]
 
   # explicit depends_on is needed since this resource doesn't reference the role or policy attachment
-  # depends_on = [aws_iam_role_policy_attachment.example]
+  depends_on = [aws_iam_role_policy_attachment.poc_nrt_policy]
 }
 
 # Create a new replication instance

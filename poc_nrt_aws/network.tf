@@ -60,6 +60,10 @@ resource "aws_route_table" "rt_poc" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
+  # route {
+  #   cidr_block = "172.31.0.0/16"
+  # }
+
 
   tags = {
     name = "rt_poc"
@@ -67,7 +71,6 @@ resource "aws_route_table" "rt_poc" {
 }
 
 resource "aws_route_table_association" "a" {
-  count = 2
-  subnet_id      = aws_subnet.subnet[count.index].id
+  subnet_id      = aws_subnet.subnet[0].id
   route_table_id = aws_route_table.rt_poc.id
 }

@@ -1,13 +1,11 @@
 {
-    "Version": "2012-10-17",
     "Statement": [
         {
-            "Effect": "Allow",
             "Action": "kinesis:*",
-            "Resource": "*"
+            "Effect": "Allow",
+            "Resource": "arn:aws:kinesis:*:*:*/*"
         },
         {
-            "Effect": "Allow",
             "Action": [
                 "rds:*",
                 "application-autoscaling:DeleteScalingPolicy",
@@ -26,17 +24,31 @@
                 "outposts:GetOutpostInstanceTypes",
                 "devops-guru:GetResourceCollection"
             ],
+            "Effect": "Allow",
             "Resource": "*"
         },
         {
             "Effect": "Allow",
+            "Action": [
+                "ec2:CreateNetworkInterface",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeInternetGateways",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVpcs",
+                "ec2:DeleteNetworkInterface",
+                "ec2:ModifyNetworkInterfaceAttribute",
+                "sts:*"
+            ],
+            "Resource": "*"
+        },
+        {
             "Action": "pi:*",
+            "Effect": "Allow",
             "Resource": "arn:aws:pi:*:*:metrics/rds/*"
         },
         {
-            "Effect": "Allow",
             "Action": "iam:CreateServiceLinkedRole",
-            "Resource": "*",
             "Condition": {
                 "StringLike": {
                     "iam:AWSServiceName": [
@@ -44,15 +56,15 @@
                         "rds.application-autoscaling.amazonaws.com"
                     ]
                 }
-            }
+            },
+            "Effect": "Allow",
+            "Resource": "*"
         },
         {
             "Action": [
                 "devops-guru:SearchInsights",
                 "devops-guru:ListAnomaliesForInsight"
             ],
-            "Effect": "Allow",
-            "Resource": "*",
             "Condition": {
                 "ForAllValues:StringEquals": {
                     "devops-guru:ServiceNames": [
@@ -62,21 +74,23 @@
                 "Null": {
                     "devops-guru:ServiceNames": "false"
                 }
-            }
-        },
-        {
+            },
             "Effect": "Allow",
-            "Action": [
-                "ec2:*"
-            ],
             "Resource": "*"
         },
         {
+            "Action": [
+                "ec2:*"
+            ],
             "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
             "Action": [
                 "s3:*"
             ],
-            "Resource": "arn:aws:s3:::dms-*"
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::*"
         },
         {
             "Action": [
@@ -91,6 +105,14 @@
             ],
             "Effect": "Allow",
             "Resource": "arn:aws:mgh:*:*:progressUpdateStream/DMS/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "glue:*"
+            ],
+            "Resource": "*"
         }
-    ]
+    ],
+    "Version": "2012-10-17"
 }

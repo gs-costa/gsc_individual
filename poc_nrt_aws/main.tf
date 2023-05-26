@@ -10,7 +10,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "gsantosaero-terraform-remote-state"
+    bucket = "gustavocosta-terraform-remote-state"
     key    = "poc_nrt/terraform.tfstate"
     region = "us-east-1"
   }

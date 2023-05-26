@@ -6,9 +6,12 @@
             "Effect": "Allow",
             "Principal": {
                 "Service": [
-                    "dms.amazonaws.com",
                     "firehose.amazonaws.com",
-                    "redshift.amazonaws.com"
+                    "redshift.amazonaws.com",
+                    "dms.amazonaws.com",
+                    "kinesisanalytics.amazonaws.com",
+                    "glue.amazonaws.com",
+                    "cloudwatch.amazonaws.com"
                 ]
             },
             "Action": "sts:AssumeRole"
