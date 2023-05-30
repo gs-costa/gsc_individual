@@ -1,9 +1,29 @@
 resource "aws_db_subnet_group" "dsg_poc_nrt" {
   name       = "main"
-  subnet_ids = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id]
+  subnet_ids = [aws_subnet.subnet[0].id, aws_subnet.subnet[1].id, aws_subnet.subnet[2].id]
 
   tags = {
     Name = "DB subnet group"
+  }
+}
+
+resource "aws_db_parameter_group" "params_dms_postgresql" {
+  name   = "params-postgresql-dms"
+  family = "postgres12"
+
+  parameter {
+    name  = "session_replication_role"
+    value = "replica"
+  }
+
+  parameter {
+    name  = "rds.logical_replication"
+    value = 1
+  }
+
+  parameter {
+    name = "wal_sender_timeout"
+    value = 0
   }
 }
 
@@ -20,5 +40,6 @@ resource "aws_db_instance" "db_instance_poc_nrt" {
   db_subnet_group_name   = aws_db_subnet_group.dsg_poc_nrt.id
   vpc_security_group_ids = [aws_security_group.sc_poc_nrt.id]
   skip_final_snapshot    = true
+  parameter_group_name = aws_db_parameter_group.params_dms_postgresql.name
   # monitoring_role_arn    = aws_iam_role.poc_nrt_role.arn
 }

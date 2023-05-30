@@ -332,7 +332,7 @@ def main():
     except Exception as e:
         pass
 
-    for i in range(0, 5):
+    for i in range(0, 12):
 
         item_id = random.randint(1, 100)
         state = states[random.randint(0, len(states) - 1)]
