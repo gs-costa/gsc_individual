@@ -13,7 +13,7 @@ resource "aws_dms_replication_instance" "dms_repl_instance" {
   allocated_storage            = 5
   apply_immediately            = true
   auto_minor_version_upgrade   = true
-  availability_zone            = var.location[0]
+  availability_zone            = var.location[1]
   multi_az                     = false
   preferred_maintenance_window = "sun:00:30-sun:03:30"
   publicly_accessible          = false
