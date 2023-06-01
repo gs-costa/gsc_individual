@@ -11,7 +11,7 @@ resource "aws_subnet" "subnet" {
   count = 3
 
   vpc_id            = aws_vpc.vpc_poc.id
-  cidr_block        = "10.0.${count.index}.0/24"
+  cidr_block        = "10.0.${2 - count.index}.0/24"
   availability_zone = var.location[count.index]
 
   tags = {
@@ -71,19 +71,19 @@ resource "aws_route_table" "rt_poc" {
 }
 
 resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.subnet[2].id
+  subnet_id      = aws_subnet.subnet[0].id
   route_table_id = aws_route_table.rt_poc.id
 }
 
 resource "aws_vpc_endpoint" "vpc_endpoint" {
-  vpc_id             = aws_vpc.vpc_poc.id
-  service_name       = "com.amazonaws.us-east-1.kinesis-streams"
-  policy             = file("./permissions/policy_endpoint.json")
-  ip_address_type    = "ipv4"
+  vpc_id          = aws_vpc.vpc_poc.id
+  service_name    = "com.amazonaws.us-east-1.kinesis-streams"
+  policy          = file("./permissions/policy_endpoint.json")
+  ip_address_type = "ipv4"
   # route_table_ids    = aws_route_table.rt_poc.id
-  subnet_ids         = [aws_subnet.subnet[1].id]
-  security_group_ids = [aws_security_group.sc_poc_nrt.id]
-  vpc_endpoint_type  = "Interface"
+  subnet_ids          = [aws_subnet.subnet[1].id]
+  security_group_ids  = [aws_security_group.sc_poc_nrt.id]
+  vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
   tags = {
     Name = "nrt-poc-endpoint"

@@ -2,7 +2,7 @@ resource "aws_dms_replication_subnet_group" "dms_subnet_group" {
   replication_subnet_group_description = "subnet group para instancia de replicação no dms"
   replication_subnet_group_id          = "dms-subnet-group"
 
-  subnet_ids = [aws_subnet.subnet[1].id, aws_subnet.subnet[0].id]
+  subnet_ids = [aws_subnet.subnet[1].id, aws_subnet.subnet[2].id]
 
   # explicit depends_on is needed since this resource doesn't reference the role or policy attachment
   depends_on = [aws_iam_role_policy_attachment.poc_nrt_policy]
@@ -58,6 +58,11 @@ resource "aws_dms_replication_task" "dms_repl_task" {
   source_endpoint_arn      = aws_dms_endpoint.source_endpoint.endpoint_arn
   table_mappings           = "{\"rules\":[{\"rule-type\":\"selection\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"object-locator\":{\"schema-name\":\"%\",\"table-name\":\"%\"},\"rule-action\":\"include\"}]}"
   target_endpoint_arn      = aws_dms_endpoint.target_endpoint.endpoint_arn
+  lifecycle {
+    ignore_changes = [
+      replication_task_settings,
+    ]
+  }
 
   depends_on = [
     aws_kinesis_stream.pocnrt_stream
