@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Entrar em PDPJ</title>
+    <link rel="icon" href="/auth/resources/pak3w/login/pje/img/favicon.ico" />
+            <link href="/auth/resources/pak3w/login/pje/css/styles.css" rel="stylesheet" />
+            <link href="/auth/resources/pak3w/login/pje/css/bootstrap.min.css" rel="stylesheet" />
+            <script src="/auth/resources/pak3w/login/pje/js/pjeOffice.js" type="text/javascript"></script>
+            <script src="/auth/resources/pak3w/login/pje/js/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
+            <script src="/auth/resources/pak3w/login/pje/js/popper.js" type="text/javascript"></script>
+            <script src="/auth/resources/pak3w/login/pje/js/bootstrap.min.js" type="text/javascript"></script>
+            <script src="/auth/resources/pak3w/login/pje/js/qcode-decoder.min.js" type="text/javascript"></script>
+</head>
+
+<body class="login-body">
+  <div class="form-signin">
+    <div class=" ">
+      <header class="">
+      </header>
+      <div id="kc-content">
+        <div id="kc-content-wrapper">
+        <div id="kc-form" class="">
+            <div id="kc-form-wrapper" class=" ">
+                    <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="https://sso.cloud.pje.jus.br/auth/realms/pje/login-actions/authenticate?session_code=8_0xdt5A5kgKv8UvQq6qDCkRcr9JBY3C1wUjtL83OmE&amp;execution=a004f348-bcca-4987-b5f7-dd119569fbfc&amp;client_id=pje-tjmg-1g&amp;tab_id=6peoGyWMM1s" method="post">
+                        <div class="container">
+                            <div class="row align-items-center form-wrapper">
+                                <div class="col-md-6">
+                                    <input type="button" class="btn botao-certificado" name="login-pje-office" id="kc-pje-office" value="CERTIFICADO DIGITAL" onclick="autenticar('fm+Y6HIdCKY2hIj5ySYR5wIZxRf2mFwUESE6dzB1aXsVGdWb4I+crfliZ615GbBjFpbVJdKIyi7oHCBU7zXLcdpyxf6WK+eOyYo7++RhGrXPX2NUF8QkeSOM9RKpTu2sKtmUa8EC9RNfxCynWttk5EAqPAHiQLvvhM3qgMNIqhNnMFGAiqsNIeUsA66+DPNPleahrd0WFwd8S6dMv26Xi9wV0Zxd4UZpfq2fo0/dgRsOIIK3vwei56KqKWWi5BvsIxvupM2eJWgBOgTD2/HBkezK4DWkEgDbBu61J9uT5bNeJ1IIlBB9k+agVWvKwX05BL62V0nS3QYgJPXpLbBgdg==');"/>
+                                </div>
+                                <div class="col-md-6 div-login">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                                <input tabindex="1" id="username" class="form-control" name="username" placeholder="CPF/CNPJ" type="text" autofocus autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input tabindex="2" id="password" class="form-control" name="password" placeholder="Senha" type="password" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 float-right">
+                                        <div id="kc-form-buttons" class="">
+                                            <input tabindex="4" class="btn btn-primary btn-block botao-entrar" name="login" id="kc-login" type="submit" value="Entrar"/>
+                                            <input type="hidden" id="pjeoffice-code" name="pjeoffice-code" value="">
+                                            <input type="hidden" id="phrase" name="phrase" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+        </div>
+
+
+              <div id="kc-info" class="">
+                  <div id="kc-info-wrapper" class="">
+
+                  </div>
+              </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+</body>
+</html>
